@@ -7,8 +7,9 @@ app = Flask(__name__)
 # ================== TON LIEN DISCORD ==================
 DISCORD_INVITE_URL = "https://discord.gg/HhYVkCpN"
 
-@app.route('/invite/<invite_code>')
-def track_invite(invite_code):
+
+@app.route('/discord')
+def track_invite():
     ip = request.remote_addr
     user_agent = request.headers.get('User-Agent', 'Inconnu')
     referer = request.headers.get('Referer', 'Direct')
@@ -17,7 +18,6 @@ def track_invite(invite_code):
 
     print("=" * 70)
     print(f"[{timestamp}] NOUVEL CLIC SUR L'INVITATION !")
-    print(f"Code d'invite utilisé : {invite_code}")
     print(f"ID unique          : {unique_id}")
     print(f"Adresse IP          : {ip}")
     print(f"Navigateur/Appareil : {user_agent}")
@@ -25,8 +25,6 @@ def track_invite(invite_code):
     print("=" * 70)
 
     return redirect(DISCORD_INVITE_URL, code=302)
-
-
 @app.route('/')
 def home():
     return "<h1>Tracker Discord - Prêt à l'emploi</h1>"
